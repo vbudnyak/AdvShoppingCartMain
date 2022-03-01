@@ -44,5 +44,5 @@ def tearDown():
         driver.close()
         driver.quit()
 
-setUp()
-tearDown()
+#setUp()
+#tearDown()

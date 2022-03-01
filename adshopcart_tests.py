@@ -7,6 +7,6 @@ class TestShopping(unittest.TestCase):
 
 
     @staticmethod
-    def open_shooping_site():
-        methods.setUp(locators.advantage_shopping_cart_url)
+    def test_open_shooping_site():
+        methods.setUp()
         methods.tearDown()
