@@ -5,6 +5,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import Select
 
 
 s = Service(executable_path='./chromedriver')
@@ -38,7 +39,6 @@ def setUp():
     sleep(0.25)
 
 def create_new_user():
-#    driver.find_element(By.XPATH, '//span[contains(., "Site administration")]').click()
     driver.find_element(By.ID, 'menuUser').click()
     sleep(2)
 
@@ -47,8 +47,11 @@ def create_new_user():
     sleep(2)
 
     driver.find_element(By.NAME, 'usernameRegisterPage').send_keys(locators.new_username)
+    sleep(0.25)
     driver.find_element(By.NAME, 'passwordRegisterPage').send_keys(locators.new_password)
+    sleep(0.25)
     driver.find_element(By.NAME, 'emailRegisterPage').send_keys(locators.email)
+    sleep(0.25)
     driver.find_element(By.NAME, 'confirm_passwordRegisterPage').send_keys(locators.new_password)
     driver.find_element(By.NAME, 'first_nameRegisterPage').send_keys(locators.first_name)
     driver.find_element(By.NAME, 'last_nameRegisterPage').send_keys(locators.last_name)
@@ -61,11 +64,9 @@ def create_new_user():
     driver.find_element(By.NAME, 'allowOffersPromotion').click()
     driver.find_element(By.NAME, 'i_agree').click()
     driver.find_element(By.ID, 'register_btnundefined').click()
-
     sleep(2)
 
     driver.find_element(By.XPATH, '//*[@id="menuUser"]').click()
-
     sleep(1)
 
     driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[1]').click()
@@ -73,9 +74,6 @@ def create_new_user():
     driver.find_element(By.XPATH, '//*[@id="menuUser"]').click()
     sleep(1)
     driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[2]').click()
-
-#    if driver.find_element(By.LINK_TEXT, '- No orders -') == '- No orders -':
-#        print(f"No orders in the basket")
 
     driver.find_element(By.XPATH, '//*[@id="menuUser"]').click()
     sleep(1)
@@ -86,9 +84,96 @@ def login_user():
     driver.find_element(By.ID, 'menuUser').click()
     sleep(1)
     driver.find_element(By.NAME, 'username').send_keys(locators.new_username)
+    sleep(0.25)
     driver.find_element(By.NAME, 'password').send_keys(locators.new_password)
     sleep(0.25)
     driver.find_element(By.XPATH, '// *[ @ id = "sign_in_btnundefined"]').click()
+
+def check_homepage():
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "speakersTxt"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Speakers section is presented')
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "tabletsTxt"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Tablets section is presented')
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "laptopsTxt"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Laptops section is presented')
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "miceTxt"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Mice section is presented')
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "headphonesTxt"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Headphones section is presented')
+
+    driver.find_element(By.LINK_TEXT, 'SPECIAL OFFER').click()
+
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "special_offer_items"]')
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Special offers are here!')
+
+    driver.find_element(By.LINK_TEXT, 'POPULAR ITEMS').click()
+    sleep(0.25)
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "popular_items"]')
+
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Popular item to choose from!')
+
+    driver.find_element(By.LINK_TEXT, 'CONTACT US').click()
+    sleep(0.25)
+    product_title = driver.find_element(By.XPATH, '// *[ @ id = "supportCover"]')
+
+    print(product_title.is_displayed())
+    sleep(0.25)
+    print(f'-------------------------------')
+    print(f'Contact us! We are waiting!')
+
+    if driver.find_element(By.XPATH, '// *[ @ id = "Layer_1"]').is_displayed():
+        print(f'------ Logo is presented ------')
+
+    driver.find_element(By.LINK_TEXT, 'CONTACT US').click()
+    sleep(0.25)
+    print(f'-------------------------------------------')
+    print(f'We knew that you need to contact us!!!')
+
+    sleep(0.25)
+    Select(driver.find_element(By.XPATH, "//*[@name='categoryListboxContactUs']")).select_by_visible_text('Laptops')
+    sleep(0.25)
+    Select(driver.find_element(By.XPATH, "//*[@name='productListboxContactUs']")).select_by_visible_text('HP Chromebook 14 G1(ENERGY STAR)')
+    sleep(0.25)
+    driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
+    sleep(0.25)
+    driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.description)
+    sleep(0.5)
+    driver.find_element(By.ID, 'send_btnundefined').click()
+    sleep(0.25)
+    if driver.page_source.find('SPEAKERS'):
+        print(f'#################################')
+        print(f'Message has been delivered.')
+        print(f'"Continue Shopping" button is activated.')
+    else:
+        print(f'Upsssss.... Something wrong!')
+    sleep(0.25)
+
 
 def delete_user():
     sleep(0.5)

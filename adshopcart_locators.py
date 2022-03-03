@@ -20,3 +20,4 @@ province = fake.province_abbr()
 postal_code = fake.postalcode()
 
 country = fake.country()
+description = fake.sentence(nb_words=30)

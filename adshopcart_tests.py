@@ -11,6 +11,7 @@ class TestShopping(unittest.TestCase):
         methods.setUp()
         methods.create_new_user()
         methods.login_user()
+        methods.check_homepage()
         methods.delete_user()
         methods.retry_login()
         methods.tearDown()
